@@ -10,7 +10,8 @@ import med.voll.api.endereco.Endereco;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-//mapeando entidades
+//Mapeando entidades
+//Anotacoes da JPA
 @Table(name = "medicos")
 @Entity(name = "Medicos")
 @Getter

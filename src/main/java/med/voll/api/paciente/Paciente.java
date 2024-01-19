@@ -33,6 +33,7 @@ public class Paciente {
 
     // Estou criando um objeto recebendo as informacoes do DdosCadastropaciente
     public Paciente(DadosCadastroPaciente dados){
+        this.ativo=true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
