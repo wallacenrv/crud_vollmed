@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("medicos") //Esta mapeando a url medicos
@@ -27,10 +28,16 @@ public class MedicoController {
     @Autowired
     private MedicoRepository repository;
 
-    @PostMapping // requisicao post
+
+    //Padronizando código 201(um registro foi criado) devolve tambem um cabecalho do protocolo HTTP (LOCATION).
+    @PostMapping // requisicao post 201
     @Transactional // transacao ativa com o banco de dados
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados) { // @ResquestBody a requicao vem do corpo
-        repository.save(new Medico(dados)); // convertendo a string para objeto / criei um contrutor dentro da entidade medico
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriComponentsBuilder) { // @ResquestBody a requicao vem do corpo  // UriComponentsBuilder cria a uri
+        var medico = new Medico(dados);
+        repository.save(medico); // convertendo a string para objeto / criei um contrutor dentro da entidade medico
+        var uri = uriComponentsBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
+        //return ResponseEntity.created(uri).body(dto);
     }
 
     @GetMapping
@@ -78,6 +85,13 @@ public class MedicoController {
         Medico medico = repository.getReferenceById(id);
         medico.excluir();
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("{id}")
+    public ResponseEntity detalhar(@PathVariable Long id){
+       var medico = repository.getReferenceById(id);
+       return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
 
