@@ -1,8 +1,7 @@
-package med.voll.api.endereco;
+package med.voll.api.domain.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.paciente.DadosAtualizarPaciente;
 
 public record DadosEndereco(
 

@@ -1,10 +1,4 @@
-package med.voll.api.paciente;
-
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import med.voll.api.endereco.DadosEndereco;
+package med.voll.api.domain.paciente;
 
 public record DadosListagemPaciente(Long id,String nome,String email, String cpf){
 
